@@ -37,14 +37,41 @@ h1 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-align: center;
 }
 
 .photographer_section article h2 {
     color: #D3573C;
     font-size: 36px;
+    margin: 2px 0;
 }
 
 .photographer_section article img {
     height: 200px;
     width: 200px;
+    border-radius: 50%;
+object-fit: cover;
+}
+.photographer_section article p{
+    margin: 2px 0;
+}
+.photographer_section article a{
+    text-decoration: none;
+}
+
+.photographer_section article p.local{
+    color: #D3573C;
+}
+.choix {
+    width: 16%;
+    height: 55px;
+    margin-left: 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    background-color: #901C1C;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 700;
 }
