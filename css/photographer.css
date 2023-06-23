@@ -1,95 +1,199 @@
+:root {
+  --textColor--: #d3573c;
+  --background--: #901c1c;
+}
+
 #contact_modal {
-    display: none;
+  display: none;
 }
 
 .photograph-header {
-    background-color: #FAFAFA;
-    height: 300px;
-    margin: 0 100px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 50px;
+  background-color: #fafafa;
+  height: 300px;
+  margin: 0 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 50px;
 }
 
 .contact_button {
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    padding: 11px;
-    width: 170px;
-    height: 70px;
-    border: none;
-    background-color: #901C1C;
-    border-radius: 5px;
-    cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  padding: 11px;
+  width: 170px;
+  height: 70px;
+  border: none;
+  background-color: var(--background--);
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .modal {
-    border-radius: 5px;
-    background-color: #DB8876;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 35px;
-    margin: auto;
+  border-radius: 5px;
+  background-color: #db8876;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 35px;
+  margin: auto;
 }
 
 .modal header {
-    justify-content: space-between;
-    width: 100%;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .modal header img {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .modal header h2 {
-    font-size: 64px;
-    font-weight: normal;
-    text-align: center;
+  font-size: 64px;
+  font-weight: normal;
+  text-align: center;
 }
 
+
 form {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 form label {
-    color: #312E2E;
-    font-size: 36px;
+  color: #312e2e;
+  font-size: 36px;
 }
 
 form div {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: self-start;
-    margin-bottom: 26px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: self-start;
+  margin-bottom: 26px;
 }
 
 form input {
-    width: 100%;
-    height: 68px;
-    border: none;
-    border-radius: 5px;
+  width: 100%;
+  height: 68px;
+  border: none;
+  border-radius: 5px;
 }
 
 .photo-profil img {
-    height: 200px;
-    width: 200px;
-    border-radius: 50%;
-object-fit: cover;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  object-fit: cover;
 }
-.nom-shooter, .local{
-     color: #D3573C;
+
+.local {
+  color: var(--background--);
 }
-.nom-shooter{
-   
-    font-size: 36px;
-    margin: 2px 0;
+
+.nom-shooter {
+  color: var(--textColor--);
+  font-size: 36px;
+  margin: 2px 0;
+}
+
+.list-img {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+.list-img article {
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column-reverse;
+  text-align: center;
+}
+
+.media-item,
+canvas {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+article .detaille {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: var(--background--);
+}
+
+.photograph-medias {
+  position: relative;
+  margin: 0 100px;
+}
+
+.lightbox,
+#contact_modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+}
+.lightbox-image>img, .lightbox-image>video {
+  width: 50em;
+  height: 33em;
+  object-fit: cover;
+}
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 30px;
+}
+.btn {
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 20px;
+}
+.btn i {
+  font-size: 50px;
+  color: var(--background--);
+}
+.lightbox-navigation {
+  width: 84%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: none;
+  border: none;
+  transform: translate(-50%, -50%);
+}
+#banner {
+  width: 8em;
+  height: 50px;
+  background-color: var(--textColor--);
+  position: fixed;
+  right: 100px;
+  bottom: 0px;
 }
