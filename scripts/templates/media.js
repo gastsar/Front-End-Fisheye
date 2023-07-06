@@ -1,4 +1,3 @@
-
 // Fonction pour créer le profil du photographe
 function photographerProfil(data) {
   // Destructuring des données
@@ -19,33 +18,32 @@ function photographerProfil(data) {
 
   // Fonction pour obtenir le nom et la description de l'utilisateur
   const getUserName = () => {
-    const contenue = document.createElement("div");
-    const nom = document.createElement("h2");
+    const contenu = document.createElement("div");
+    const nom = document.createElement("h1");
     const pays = document.createElement("p");
     const descript = document.createElement("p");
 
     nom.className = "nom-shooter";
     nom.textContent = name;
-    pays.textContent = city + "," + country;
+    pays.textContent = city + ", " + country;
     descript.textContent = tagline;
-    contenue.appendChild(nom);
-    contenue.appendChild(pays);
-    contenue.appendChild(descript);
+    contenu.appendChild(nom);
+    contenu.appendChild(pays);
+    contenu.appendChild(descript);
 
-    return contenue;
+    return contenu;
   };
 
   return { getUserName, getUserPhoto };
 }
 
 // Fonction pour créer le template des médias
-function mediaTemplate(data) {
-  // Destructuring des données
-  const { image, title, likes, video, date } = data;
+function mediaTemplate(mediaItem /* , photographers */) {
+  const { image, title, likes, video, shooterName, date, id } = mediaItem;
 
-  const picture = `assets/shooter/${image}`;
-  const clip = `assets/shooter/${video}`;
-
+  const picture = `assets/shoot/${shooterName}/${image}`;
+  const clip = `assets/shoot/${shooterName}/${video}`;
+  console.log(date, id);
   // Fonction pour obtenir la carte média
   const getMediaCardDOM = () => {
     const article = document.createElement("article");
@@ -53,58 +51,41 @@ function mediaTemplate(data) {
     profil.className = "detaille";
     const mediaContainer = document.createElement("div"); // Conteneur pour l'image ou la vidéo
 
-    const titre = document.createElement("p");
-    const jaime = document.createElement("p");
-    const andro = document.createElement("p");
-
+    const titre = document.createElement("h2");
+    const likeCount = document.createElement("span");
+    const likeElement = document.createElement("span");
+    const likeIcone = document.createElement("i");
+    likeIcone.className = "fas fa-heart";
+    likeIcone.setAttribute("role", "button");
+    likeIcone.setAttribute("aria-label", "likes");
+    likeIcone.setAttribute("tabindex", "0");
+    likeElement.className = "like_add";
+    likeCount.append(likeElement,likeIcone);
     article.appendChild(profil);
 
     titre.textContent = title;
-    jaime.innerHTML = likes + ` <i class="fa-solid fa-heart"></i>`;
-    /*  andro.textContent = date; */
+    likeElement.textContent = likes;
 
     if (video) {
-      const canvas = document.createElement("canvas"); // Création de l'élément canvas
-      canvas.setAttribute("width", "640");
-      canvas.setAttribute("height", "360");
-      canvas.setAttribute("data-lightbox", "gallery");
-      mediaContainer.appendChild(canvas);
-
-      const videoElem = document.createElement("video"); // Création de la vidéo
-      videoElem.style.display = "none"; // Masquer la vidéo
-      const source = document.createElement("source");
-      source.setAttribute("src", clip);
-      source.setAttribute("type", "video/mp4");
-
-      videoElem.appendChild(source);
-      videoElem.setAttribute("controls", "");
-
-      videoElem.addEventListener("loadeddata", () => {
-        const context = canvas.getContext("2d");
-        context.drawImage(videoElem, 0, 0, canvas.width, canvas.height); // Dessiner la première image de la vidéo sur le canvas
-        videoElem.currentTime = 0; // Réinitialiser le temps de la vidéo
-      });
-
-      /*    canvas.addEventListener("click", () => {
-        // Événement de clic sur le canvas pour démarrer la vidéo
-        videoElem.style.display = "block"; // Afficher la vidéo
-        canvas.style.display = "none"; // Masquer le canvas
-        videoElem.play();
-      }); */
-
+      const videoElem = document.createElement("video");
+      videoElem.setAttribute("src", clip);
+      videoElem.setAttribute("type", "video/mp4");
+      videoElem.className = "media-item";
+      videoElem.setAttribute("data-lightbox", "gallery");
+      videoElem.setAttribute("tabindex", "0");
       mediaContainer.appendChild(videoElem);
     } else {
       const img = document.createElement("img");
       img.setAttribute("src", picture);
-      img.setAttribute("alt", title);
+      img.setAttribute("alt", `${title}, closeup view`);
       img.setAttribute("data-lightbox", "gallery");
+      img.setAttribute("tabindex", "0");
       img.className = "media-item";
       mediaContainer.appendChild(img);
     }
 
     profil.appendChild(titre);
-    profil.appendChild(andro);
-    profil.appendChild(jaime);
+    profil.appendChild(likeCount);
     article.appendChild(mediaContainer);
 
     return article;
@@ -113,19 +94,26 @@ function mediaTemplate(data) {
   return { getMediaCardDOM };
 }
 
+
 function banner() {
   const bannerHtml = document.querySelector("#banner");
-  const like = document.createElement("h4");
-  const coeurb = document.createElement("i");
-  const prix = document.createElement("h4");
+
+  const like = document.createElement("span");
+  const coeur = document.createElement("i");
+  const prix = document.createElement("span");
+  const contenueLike = document.createElement("p");
 
   like.id = "total_likes";
-  coeurb.className = "fas fa-heart";
-  prix.id = "prix";
+  coeur.className = "fas fa-heart";
+  coeur.setAttribute("aria-label", "likes");
 
-  bannerHtml.appendChild(like);
-  bannerHtml.appendChild(coeurb);
+  prix.id = "price";
+
+  contenueLike.append(like, coeur);
+
+  bannerHtml.appendChild(contenueLike);
   bannerHtml.appendChild(prix);
+
   return bannerHtml;
 }
 

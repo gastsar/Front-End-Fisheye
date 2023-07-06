@@ -12,9 +12,10 @@ header {
     justify-content: space-between;
     align-items: center;
     height: 90px;
+    margin-top: 20px;
 }
 
-h1 {
+header>h1 {
     color: #901C1C;
     margin-right: 100px;
 }
@@ -32,11 +33,11 @@ h1 {
 }
 
 .photographer_section article {
-    justify-self: center;
+ /*    justify-self: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: column; */
     text-align: center;
 }
 

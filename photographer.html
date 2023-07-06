@@ -1,96 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
+  <head>
+    <link href="css/style.css" rel="stylesheet" type="text/css" >
+    <link href="css/mediaStyle.css" rel="stylesheet" type="text/css" >
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
 
-<head>
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <meta charset="utf-8" />
-  <link rel="icon" type="image/png" href="assets/favicon.png" />
-  <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-    integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer">
-
-  <title>Fisheye - photographe</title>
-</head>
-
-<body>
-  <header>
-    <a href="index.html"><img src="assets/images/logo.png" class="logo" /></a>
-  </header>
-  <main id="main">
-    <div class="photograph-header">
-      <button class="contact_button" onclick="displayModal()">
-        Contactez-moi
-      </button>
-    </div>
+    <title>Fisheye - photographe </title>
+  </head>
+  <body>
+    <header>
+      <a href="index.html"> <img src="assets/images/logo.png"  class="logo" alt="Fisheye Home page" ></a>
+    </header>
+    <main id="main">
+      <div class="photograph-header">
+        <button class="contact_button" onclick="displayModal() " aria-label="Contact me">Contactez-moi</button>
+      </div>
     <section class="photograph-medias">
-      <div class="tri">
-        <label for="choix" class="trier_par">Trier par</label>
-        <select class="choix" id="choix" tabindex="3">
-          <option class="filtre" value="pop" selected>Popularité</option>
-          <option class="filtre" value="date">Date</option>
-          <option class="filtre" value="titre">Titre</option>
-        </select>
-      </div>
+      <label for="filtre">Trier par</label>
+      <select name="filtre" id="filtre">     
+        <option class="trie" value="filter-date">Date</option>
+        <option  class="trie" value="filter-like" >Popularité</option>
+        <option  class="trie" value="filter-titre">Titre</option>
+      </select>
       <div class="list-img"></div>
-      <div class="lightbox">
-        <span class="close-button btn"><i class="fa-solid fa-xmark"></i></span>
-        <div class="lightbox-content">
-          <div class="lightbox-image"></div>
-        </div>
+      <div aria-label="image closeup view" aria-hidden="false" class="lightbox">
+      
+        <i class="close-button btn fas fa-times" aria-label="Close dialog"></i>
+       
+          
+      <figure   class="lightbox-image"></figure>
+        
         <div class="lightbox-navigation">
-          <button class="lightbox-prev-button btn"><i class="fa-solid fa-chevron-left"></i></button>
-          <button class="lightbox-next-button btn"><i class="fa-solid fa-chevron-right"></i></button>
+          <button class="lightbox-prev-button btn" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
+          <button class="lightbox-next-button btn"  aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
         </div>
       </div>
-      <div id="banner">
-        </div#>
+      <div id="banner"></div>
     </section>
   </main>
-
   <div id="contact_modal">
     <div class="modal">
       <header>
-        <h2 id="titre_modal" aria-label="Formulaire de contact">
-          Contactez-moi
-        </h2>
-        <img src="assets/icons/close.svg" alt="ferme le formulaire" onclick="closeModal()" />
+        <h1>Contactez-moi</h1>
+        <img src="assets/icons/close.svg" onclick="closeModal()" aria-label="Close dialog" >
       </header>
-      <form id="formulaire">
-        <div class="formData">
-          <label for="first">Prénom</label>
-          <input class="text-control" aria-label=" Entrez votre prénom" type="text" id="first" name="first"
-            pattern="[a-zA-Z]{2,}" required />
-          <span id="firstname-error"></span>
+      
+      <form action="" method="get">
+        <div>
+          <label for="surname">Prénom :</label>
+          <input tabindex="0" type="text" name="surname" id="surname" placeholder="Votre nom" required>
         </div>
-        <div class="formData">
-          <label for="last">Nom</label>
-          <input class="text-control" aria-label="Entrez votre nom" type="text" id="last" name="last"
-            pattern="[a-zA-Z]{2,}" required />
-          <span id="lastname-error"></span>
+        <div>
+          <label for="name">Nom :</label>
+          <input tabindex="0" type="text" name="name" id="name" placeholder="Votre prénom" required>
         </div>
-        <div class="formData">
-          <label for="email">Email</label>
-          <input class="text-control" aria-label="Entrez votre adresse email" type="email" id="email" name="email"
-            required />
-          <span id="email-error"></span>
+        <div>
+          <label for="email">Email :</label>
+          <input tabindex="0" type="email" name="email" id="email" placeholder="Votre email" required>
         </div>
-        <div class="formData">
-          <label for="message">Votre message</label>
-          <textarea class="text-control" aria-label="Détail de votre message" type="text" id="message" name="message"
-            required></textarea>
-          <span id="message-error"></span>
+        <div>
+          <label for="message">Votre message :</label>
+          <textarea tabindex="0" name="message" id="message" placeholder="Votre message" required></textarea>
         </div>
-        <button class="contact_button" type="button" aria-label="envoyer le formulaire" id="envoyer">
-          Envoyer
-        </button>
+        <button tabindex="0" class="contact_button" type="submit">Envoyer</button>
       </form>
+      
     </div>
-  </div>
-  <script src="/scripts/pages/photographer.js"></script>
-  <script src="/scripts/utils/contactForm.js"></script>
-  <script src="/scripts/utils/lightbox.js"></script>
+  </div> 
   <script src="scripts/templates/media.js"></script>
+  <script src="scripts/pages/photographer.js"></script> 
+   <script src="scripts/utils/lightbox.js"></script>
+  <script src="scripts/utils/contactForm.js"></script>
+  
 </body>
-
 </html>
