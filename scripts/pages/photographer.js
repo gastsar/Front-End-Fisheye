@@ -3,22 +3,16 @@ async function getPhotographerAndMediaById(photographerId) {
   try {
     const response = await fetch("data/photographers.json"); // Récupérer les données des photographes à partir du fichier JSON
     if (!response.ok) {
-      throw new Error(
-        "Erreur lors de la récupération des données des photographes."
-      );
+      throw new Error("Erreur lors de la récupération des données des photographes.");
     }
     const data = await response.json(); // Convertir la réponse en format JSON
 
-    const photographer = data.photographers.find(
-      (photographer) => photographer.id == photographerId
-    ); // Trouver le photographe correspondant à l'ID
+    const photographer = data.photographers.find((photographer) => photographer.id == photographerId); // Trouver le photographe correspondant à l'ID
 
     const media = data.media
       .filter((mediaItem) => mediaItem.photographerId == photographerId) // Filtrer les médias pour le photographe spécifique
       .map((mediaItem) => {
-        const photographer = data.photographers.find(
-          (p) => p.id == mediaItem.photographerId
-        );
+        const photographer = data.photographers.find((p) => p.id == mediaItem.photographerId);
         const shooterName = photographer ? photographer.name : "";
 
         return {
@@ -29,9 +23,7 @@ async function getPhotographerAndMediaById(photographerId) {
     return { photographer, media }; // Retourner le photographe et les médias
   } catch (error) {
     console.error(error);
-    throw new Error(
-      "Erreur lors de la récupération des données du photographe et des médias."
-    );
+    throw new Error("Erreur lors de la récupération des données du photographe et des médias.");
   }
 }
 
@@ -43,27 +35,48 @@ function filterAndDisplayMedia(media) {
 
   switch (selectedValue) {
     case "filter-date":
-      media.sort(function (a, b) {
-        return new Date(a.date) - new Date(b.date);
-      });
+      media.sort((a, b) => new Date(a.date) - new Date(b.date));
       break;
 
     case "filter-like":
-      media.sort(function (a, b) {
-        return b.likes - a.likes;
-      });
+      media.sort((a, b) => b.likes - a.likes);
       break;
 
     case "filter-titre":
-      media.sort(function (a, b) {
-        return a.title.localeCompare(b.title);
-      });
+      media.sort((a, b) => a.title.localeCompare(b.title));
       break;
   }
 
   displayMedia(media); // Afficher les médias filtrés
 }
 
+function updateLikesCount(media) {
+  const likes = document.querySelector("#total_likes");
+  const price = document.querySelector("#price");
+
+  let sommeLikes = 0;
+
+  media.forEach((mediaItem, index) => {
+    const likeButton = mediaItem.querySelector(".fa-heart");
+    const likesCountElement = mediaItem.querySelector(".like_add");
+    let likesCount = mediaItem.likes;
+
+    likesCountElement.textContent = likesCount.toString();
+
+    function updateLikes() {
+      likesCount++;
+      likesCountElement.textContent = likesCount.toString();
+      media[index].likes = likesCount;
+      sommeLikes += 1;
+      likes.textContent = sommeLikes.toString();
+    }
+
+    likeButton.addEventListener("keydown", updateLikes);
+    likeButton.addEventListener("click", updateLikes);
+  });
+
+  price.textContent = `${photographer.price}€/jour`;
+}
 // Fonction pour afficher le profil du photographe et ses médias
 function displayPhotographerAndMedia(photographer, media) {
   const photographersSection = document.querySelector(".photograph-header");
@@ -86,8 +99,7 @@ function displayPhotographerAndMedia(photographer, media) {
 
     likesCountElement.textContent = likesCount.toString();
 
-    
-    likeButton.addEventListener("click", () => {
+    function updateLikes() {
       // Incrémenter le compteur de likes pour ce média
       likesCount++;
 
@@ -100,10 +112,20 @@ function displayPhotographerAndMedia(photographer, media) {
       // Mettre à jour la somme des likes
       sommeLikes += 1;
       likes.textContent = sommeLikes.toString();
-    });
-  });
+    }
 
-  const likes = document.querySelector("#total_likes");
+    likeButton.addEventListener("click", updateLikes);
+    likeButton.addEventListener("keydown", function(e) {
+  
+      if (e.code === "Enter") {
+       
+        updateLikes();
+        
+      }
+    });
+    
+    
+    const likes = document.querySelector("#total_likes");
   const price = document.querySelector("#price");
 
   let sommeLikes = 0;
@@ -114,6 +136,9 @@ function displayPhotographerAndMedia(photographer, media) {
 
   likes.textContent = sommeLikes.toString();
   price.textContent = `${photographer.price}€/jour`;
+  });
+
+ 
 
   // Mettre à jour les écouteurs d'événements
   addEventListeners(media);
@@ -140,8 +165,7 @@ function displayMedia(media) {
 
     likesCountElement.textContent = likesCount.toString();
 
-
-    likeButton.addEventListener("click", () => {
+    function updateLikes() {
       // Incrémenter le compteur de likes pour ce média
       likesCount++;
 
@@ -150,21 +174,15 @@ function displayMedia(media) {
 
       // Mettre à jour la valeur de j'aime dans le tableau des médias
       media[index].likes = likesCount;
-    });
-  likeButton.addEventListener("keydown", (e) => {
-      if (e.code === "Enter") {
-        // Incrémenter le compteur de likes pour ce média
-        likesCount++;
-    
-        // Mettre à jour le texte de l'élément HTML avec le nouveau nombre de likes
-        likesCountElement.textContent = likesCount.toString();
-    
-        // Mettre à jour la valeur de j'aime dans le tableau des médias
-        media[index].likes = likesCount;
-      }
-    });
-    
-  });  
+
+      // Mettre à jour la somme des likes
+      sommeLikes += 1;
+      likes.textContent = sommeLikes.toString();
+    }
+
+    likeButton.addEventListener("keydown", updateLikes);
+    likeButton.addEventListener("click", updateLikes);
+  });
 
   // Mettre à jour les écouteurs d'événements
   addEventListeners(media);
@@ -176,9 +194,7 @@ async function init() {
   const photographerId = url.searchParams.get("id"); // Récupérer l'ID du photographe dans l'URL
 
   try {
-    const { photographer, media } = await getPhotographerAndMediaById(
-      photographerId
-    );
+    const { photographer, media } = await getPhotographerAndMediaById(photographerId);
 
     if (media.length > 0) {
       // Afficher le photographe et ses médias

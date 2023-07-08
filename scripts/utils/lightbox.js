@@ -10,7 +10,8 @@ function addEventListeners(media) {
 
   // Ajout des écouteurs d'événements aux cartes média
   mediaCardDOMs.forEach((mediaCardDOM, index) => {
-    mediaCardDOM.addEventListener("click", () => {
+    mediaCardDOM.addEventListener("click", (e) => {
+      e.preventDefault();
       // Mise à jour de l'index courant et affichage du média correspondant
       currentIndex = index;
       displayMediaAtIndex(currentIndex);
@@ -57,9 +58,6 @@ function addEventListeners(media) {
 
   // Ajout de l'écouteur d'événement pour la navigation clavier
   document.addEventListener("keydown", lightboxNavClavier);
-
-  // Ajout de l'écouteur d'événement pour la lecture de la vidéo avec la barre d'espace
-  document.addEventListener("keydown", playVideoWithSpace);
 
   // Fonction de navigation clavier pour la lightbox
   function lightboxNavClavier(e) {

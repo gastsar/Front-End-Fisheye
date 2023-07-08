@@ -21,6 +21,7 @@ function photographerProfil(data) {
     const contenu = document.createElement("div");
     const nom = document.createElement("h1");
     const pays = document.createElement("p");
+    pays.className ="local";
     const descript = document.createElement("p");
 
     nom.className = "nom-shooter";
@@ -49,7 +50,7 @@ function mediaTemplate(mediaItem /* , photographers */) {
     const article = document.createElement("article");
     const profil = document.createElement("div");
     profil.className = "detaille";
-    const mediaContainer = document.createElement("div"); // Conteneur pour l'image ou la vidéo
+    const mediaContainer = document.createElement("a"); // Conteneur pour l'image ou la vidéo
 
     const titre = document.createElement("h2");
     const likeCount = document.createElement("span");
@@ -70,20 +71,22 @@ function mediaTemplate(mediaItem /* , photographers */) {
       const videoElem = document.createElement("video");
       videoElem.setAttribute("src", clip);
       videoElem.setAttribute("type", "video/mp4");
+      videoElem.setAttribute("alt", `${title}, closeup view`);
       videoElem.className = "media-item";
-      videoElem.setAttribute("data-lightbox", "gallery");
+      videoElem.textContent ="Votre navigateur ne prend pas en charge la balise vidéo.";
       videoElem.setAttribute("tabindex", "0");
+     /*  mediaContainer.setAttribute("href", clip); */
       mediaContainer.appendChild(videoElem);
     } else {
       const img = document.createElement("img");
       img.setAttribute("src", picture);
       img.setAttribute("alt", `${title}, closeup view`);
-      img.setAttribute("data-lightbox", "gallery");
       img.setAttribute("tabindex", "0");
       img.className = "media-item";
+    /*   mediaContainer.setAttribute("href", picture); */
       mediaContainer.appendChild(img);
     }
-
+    mediaContainer.setAttribute("data-lightbox", "gallery");
     profil.appendChild(titre);
     profil.appendChild(likeCount);
     article.appendChild(mediaContainer);
@@ -106,6 +109,7 @@ function banner() {
   like.id = "total_likes";
   coeur.className = "fas fa-heart";
   coeur.setAttribute("aria-label", "likes");
+  like.setAttribute("aria-label", "Total likes");
 
   prix.id = "price";
 

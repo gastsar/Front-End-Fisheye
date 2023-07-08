@@ -1,21 +1,33 @@
 const modal = document.getElementById("contact_modal");
 const champ = document.getElementById("surname");
+const headerContact = document.getElementById("header-contact");
+
 function displayModal() {
   modal.style.display = "block";
   champ.focus();
 }
+
 function closeModal() {
   modal.style.display = "none";
 }
+
 function modalClavier(e) {
-  if (modal.style.display === "block" && e.code === "Escape") {
+  if (modal.style.display === "block" && e.key === "Escape") {
     closeModal();
   }
 }
+
+function getElementContact(mediaItem) {
+  const contactName = document.createElement('h2');
+  contactName.textContent = mediaItem.shooterName;
+  headerContact.appendChild(contactName);
+}
+
+
 // Ajout des écouteurs d'événements
 document.addEventListener("keydown", modalClavier);
-const form = document.querySelector("form");
 
+const form = document.querySelector("form");
 form.addEventListener("submit", function(event) {
   event.preventDefault(); // Empêche l'envoi du formulaire par défaut
   
