@@ -30,6 +30,8 @@ async function getPhotographerAndMediaById(photographerId) {
 const menuSelect = document.getElementById("filtre"); // Élément de liste déroulante pour le filtre des médias
 
 // Fonction pour filtrer et afficher les médias en fonction de la valeur sélectionnée dans la liste déroulante
+
+
 function filterAndDisplayMedia(media) {
   const selectedValue = menuSelect.value; // Valeur sélectionnée dans la liste déroulante
 
@@ -85,6 +87,9 @@ function displayPhotographerAndMedia(photographer, media) {
   const userNameDOM = photographerModel.getUserName();
   photographersSection.appendChild(userCardDOM);
   photographersSection.prepend(userNameDOM);
+
+  const photographerNameElement = document.getElementById("photographer-name");
+  photographerNameElement.textContent = photographer.name;
 
   const mediaSection = document.querySelector(".list-img");
 

@@ -19,12 +19,15 @@
         <button class="contact_button" onclick="displayModal() " aria-label="Contact me">Contactez-moi</button>
       </div>
     <section class="photograph-medias">
-      <label for="filtre">Trier par</label>
+      <div class="menu">
+         <label for="filtre">Trier par</label>
       <select name="filtre" id="filtre">     
         <option class="trie" value="filter-date">Date</option>
         <option  class="trie" value="filter-like" >Popularité</option>
         <option  class="trie" value="filter-titre">Titre</option>
       </select>
+      </div>
+     
       <div class="list-img"></div>
       <div aria-label="image closeup view" aria-hidden="false" class="lightbox">
       
@@ -44,7 +47,11 @@
   <div id="contact_modal">
     <div class="modal">
       <header id="header-contact">
-        <h1>Contactez-moi</h1>
+        <div>
+          <h1>Contactez-moi</h1>
+          <h1 id="photographer-name" aria-label="name photographe"></h1>
+        </div>
+        
         <img src="assets/icons/close.svg" onclick="closeModal()" aria-label="Close dialog" >
       </header>
       
