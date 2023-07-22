@@ -1,100 +1,95 @@
-function addEventListeners(media) {
-  // Sélection des éléments DOM nécessaires
-  const mediaCardDOMs = document.querySelectorAll("[data-lightbox]");
-  const lightbox = document.querySelector(".lightbox");
-  const lightboxImage = document.querySelector(".lightbox-image");
-  const closeButton = document.querySelector(".close-button");
-  const prevButton = document.querySelector(".lightbox-prev-button");
-  const nextButton = document.querySelector(".lightbox-next-button");
+// Fonction pour initialiser la lightbox avec les médias et les éléments DOM
+export function initLightbox(mediaCardDOMs, lightbox, lightboxImage, closeButton, prevButton, nextButton, media) {
   let currentIndex = 0;
 
-  // Ajout des écouteurs d'événements aux cartes média
+  // Ajoute les écouteurs d'événements aux médias pour ouvrir la lightbox au clic ou en appuyant sur la touche "Enter"
   mediaCardDOMs.forEach((mediaCardDOM, index) => {
     mediaCardDOM.addEventListener("click", (e) => {
       e.preventDefault();
-      // Mise à jour de l'index courant et affichage du média correspondant
-      currentIndex = index;
-      displayMediaAtIndex(currentIndex);
-      lightbox.style.display = "block";
+      openLightbox(index, media, lightboxImage, lightbox);
     });
 
-    // Ajout de l'écouteur d'événement pour la touche "Entrée"
     mediaCardDOM.addEventListener("keydown", (e) => {
       if (e.code === "Enter") {
-        // Mise à jour de l'index courant et affichage du média correspondant
-        currentIndex = index;
-        displayMediaAtIndex(currentIndex);
-        lightbox.style.display = "block";
+        e.preventDefault();
+        openLightbox(index, media, lightboxImage, lightbox);
       }
     });
   });
 
-  // Fonction pour passer au média suivant dans la lightbox
-  function nextLightbox() {
+  // Fonction pour afficher le média suivant dans la lightbox
+  const nextLightbox = () => {
     currentIndex = (currentIndex + 1) % media.length;
-    displayMediaAtIndex(currentIndex);
-    nextButton.classList.add("next");
-    prevButton.classList.remove("prev");
-  }
+    displayMediaAtIndex(currentIndex, media, lightboxImage);
+    nextButton.classList.add('active');
+    prevButton.classList.remove('active'); // Supprimer la classe "active" du bouton précédent
+  
+  };
 
-  // Fonction pour passer au média précédent dans la lightbox
-  function prevLightbox() {
+  // Fonction pour afficher le média précédent dans la lightbox
+  const prevLightbox = () => {
     currentIndex = (currentIndex - 1 + media.length) % media.length;
-    displayMediaAtIndex(currentIndex);
-    prevButton.classList.add("prev");
-    nextButton.classList.remove("next");
-  }
+    displayMediaAtIndex(currentIndex, media, lightboxImage);
+    prevButton.classList.add('active');
+    nextButton.classList.remove('active'); // Supprimer la classe "active" du bouton suivant
+  
+  };
 
   // Fonction pour fermer la lightbox
-  function close() {
+  const closeLightbox = () => {
     lightbox.style.display = "none";
-    lightboxImage.innerHTML = '';
-  }
+    lightboxImage.innerHTML = "";
+  };
 
-  // Ajout des écouteurs d'événements aux boutons de navigation et de fermeture
+  // Ajoute les écouteurs d'événements pour les boutons de navigation et le bouton de fermeture de la lightbox
   nextButton.addEventListener("click", nextLightbox);
   prevButton.addEventListener("click", prevLightbox);
-  closeButton.addEventListener("click", close);
+  closeButton.addEventListener("click", closeLightbox);
 
-  // Ajout de l'écouteur d'événement pour la navigation clavier
-  document.addEventListener("keydown", lightboxNavClavier);
-
-  // Fonction de navigation clavier pour la lightbox
-  function lightboxNavClavier(e) {
+  // Ajoute un écouteur d'événement global pour gérer la navigation et la fermeture via les touches fléchées et la touche "Escape"
+  document.addEventListener("keydown", (e) => {
     if (lightbox.style.display === "block") {
       if (e.code === "ArrowRight") {
         nextLightbox();
       } else if (e.code === "ArrowLeft") {
         prevLightbox();
       } else if (e.code === "Escape") {
-        close();
+        closeLightbox();
       }
     }
+  });
+}
+
+// Fonction pour ouvrir la lightbox et afficher le média sélectionné
+function openLightbox(index, media, lightboxImage, lightbox) {
+  displayMediaAtIndex(index, media, lightboxImage);
+  lightbox.style.display = "block";
+
+  // Définir le focus sur la lightbox pour l'accessibilité
+  setTimeout(() => {
+    lightbox.focus();
+  }, 100); // Attendre 100 ms avant de définir le focus
+}
+
+// Fonction pour afficher le média à un index donné dans la lightbox
+function displayMediaAtIndex(index, media, lightboxImage) {
+  const mediaItem = media[index];
+  lightboxImage.innerHTML = "";
+  const titreLight = document.createElement("figcaption");
+
+  if (mediaItem.hasOwnProperty("image")) {
+    const imageLight = document.createElement("img");
+    imageLight.src = `assets/shoot/${mediaItem.shooterName}/${mediaItem.image}`;
+    imageLight.alt = mediaItem.title;
+    titreLight.textContent = mediaItem.title;
+    lightboxImage.appendChild(imageLight);
+  } else if (mediaItem.hasOwnProperty("video")) {
+    const videoLight = document.createElement("video");
+    videoLight.src = `assets/shoot/${mediaItem.shooterName}/${mediaItem.video}`;
+    videoLight.controls = true;
+    titreLight.textContent = mediaItem.title;
+    lightboxImage.appendChild(videoLight);
   }
 
-  // Fonction pour afficher le média à l'index spécifié dans la lightbox
-  function displayMediaAtIndex(index) {
-    const mediaItem = media[index];
-    lightboxImage.innerHTML = '';
-
-    if (mediaItem.hasOwnProperty('image')) {
-      // Affichage d'une image
-      const imageLight = document.createElement('img');
-      imageLight.src = `assets/shoot/${mediaItem.shooterName}/${mediaItem.image}`;
-      imageLight.alt = mediaItem.title;
-      const textLight = document.createElement('figcaption');
-      textLight.textContent = mediaItem.title;
-
-      lightboxImage.appendChild(imageLight);
-      lightboxImage.appendChild(textLight);
-    } else if (mediaItem.hasOwnProperty('video')) {
-      // Affichage d'une vidéo
-      const videoLight = document.createElement('video');
-      videoLight.src = `assets/shoot/${mediaItem.shooterName}/${mediaItem.video}`;
-      videoLight.controls = true;
-      lightboxImage.appendChild(videoLight);
-    }
-  }
-
-
+  lightboxImage.appendChild(titreLight);
 }

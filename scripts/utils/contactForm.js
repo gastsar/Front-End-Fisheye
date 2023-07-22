@@ -1,6 +1,7 @@
 const modal = document.getElementById("contact_modal");
 const champ = document.getElementById("surname");
 const headerContact = document.getElementById("header-contact");
+const close_modal = document.getElementById("close_modal_contact");
 
 function displayModal() {
   modal.style.display = "block";
@@ -23,6 +24,7 @@ function getElementContact(mediaItem) {
   headerContact.appendChild(contactName);
 }
 
+close_modal.addEventListener("click",closeModal);
 
 // Ajout des écouteurs d'événements
 document.addEventListener("keydown", modalClavier);

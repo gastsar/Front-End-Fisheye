@@ -122,10 +122,12 @@ form input, textarea {
 }
 
 .list-img {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 50px;
+    grid-row-gap: 50px;
+  
 }
 
 
@@ -136,6 +138,8 @@ form input, textarea {
 margin: 15px 0;
   flex-direction: column-reverse;
   text-align: center;
+  width: 100%;
+
 }
 .list-img img:focus {
  
@@ -144,7 +148,7 @@ margin: 15px 0;
 }
 
 .media-item{
-  width: 300px;
+  width: 100%;
   height: 300px;
   object-fit: cover;
   border: 2px solid transparent;
@@ -162,9 +166,9 @@ margin: 15px 0;
 article .detaille {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  height: 50px;
   color: var(--background--);
-  font-size: 14px;
+  font-size: 12px;
   align-items: center;
 
 }
@@ -215,25 +219,25 @@ height: 640px;
   cursor: pointer;
   background: none;
   border: none;
-  width: 20px;
+  width: 50px;
   font-size: 50px;
   color: var(--background--);
 }
 .close-button {
   position: absolute;
-  top: 18%;
-  right: 20%;
+  top: 16%;
+  right: 10%;
   
 }
 .lightbox-prev-button {
     position: absolute;
   top: 50%;
-  left: 20%;
+  left: 10%;
 }
 .lightbox-next-button {
     position: absolute;
   top: 50%;
-  right: 20%;
+  right: 10%;
 }
 #banner {
   width: 10em;
@@ -268,10 +272,12 @@ height: 640px;
 .menu label{
   font-weight: 600;
 }
-.next {
+.active {
   color:var(--textColor--) !important; /* Couleur pour le bouton "Next" */
 }
-
-.prev {
-  color:var(--textColor--) !important; /* Couleur pour le bouton "Prev" */
+.btn:hover{
+  color:var(--textColor--) !important;
 }
+
+
+

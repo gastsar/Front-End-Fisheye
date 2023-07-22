@@ -1,86 +1,151 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <link href="css/photographer.css" rel="stylesheet" type="text/css" >
-    <link href="css/mediaStyle.css" rel="stylesheet" type="text/css" >
-    <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" >
+    <link href="css/photographer.css" rel="stylesheet" type="text/css" />
+    <link href="css/mediaStyle.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
 
-    <title>Fisheye - photographe </title>
+    <title>Fisheye - photographe</title>
   </head>
   <body>
     <header>
-      <a href="index.html"> <img src="assets/images/logo.png"  class="logo" alt="Fisheye Home page" ></a>
+      <a href="index.html">
+        <img src="assets/images/logo.png" class="logo" alt="Fisheye Home page"
+      /></a>
     </header>
     <main id="main">
       <div class="photograph-header">
-        <button class="contact_button" onclick="displayModal() " aria-label="Contact me">Contactez-moi</button>
+        <button
+          class="contact_button"
+          onclick="displayModal() "
+          aria-label="Contact me"
+        >
+          Contactez-moi
+        </button>
       </div>
-    <section class="photograph-medias">
-      <div class="menu">
-         <label for="filtre">Trier par</label>
-      <select name="filtre" id="filtre">     
-        <option class="trie" value="filter-date">Date</option>
-        <option  class="trie" value="filter-like" >Popularité</option>
-        <option  class="trie" value="filter-titre">Titre</option>
-      </select>
+      <section class="photograph-medias">
+        <div class="menu">
+          <label for="filtre">Trier par</label>
+
+          <select name="filtre" id="filtre">
+            <option class="trie" value="filter-date">Date</option>
+            <option class="trie" value="filter-like">Popularité</option>
+            <option class="trie" value="filter-titre">Titre</option>
+          </select>
+        </div>
+
+        <div class="list-img"></div>
+        <div
+          aria-label="image closeup view"
+          aria-hidden="false"
+          class="lightbox"
+        >
+          <i
+            class="close-button btn fas fa-times"
+            aria-label="Close dialog"
+          ></i>
+
+          <figure class="lightbox-image">
+            <figcaption class="titre_lightbox"></figcaption>
+          </figure>
+
+          <div class="lightbox-navigation">
+            <button
+              class="lightbox-prev-button btn"
+              aria-label="Previous image"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="lightbox-next-button btn" aria-label="Next image">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+        <div id="banner">
+          <p>
+            <span id="total_likes" aria-label="Total likes"></span
+            ><i class="fas fa-heart" aria-label="likes"></i>
+          </p>
+          <span id="price"></span>
+        </div>
+      </section>
+    </main>
+    <div id="contact_modal">
+      <div class="modal">
+        <header id="header-contact">
+          <div>
+            <h1>Contactez-moi</h1>
+            <h1 id="photographer-name" aria-label="name photographe"></h1>
+          </div>
+
+          <img
+            src="assets/icons/close.svg"
+            id="close_modal_contact"
+            aria-label="Close Contact form"
+          />
+        </header>
+
+        <form action="">
+          <div>
+            <label for="surname">Prénom :</label>
+            <input
+              tabindex="0"
+              type="text"
+              name="surname"
+              id="surname"
+              placeholder="Votre nom"
+              required
+            />
+          </div>
+          <div>
+            <label for="name">Nom :</label>
+            <input
+              tabindex="0"
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Votre prénom"
+              required
+            />
+          </div>
+          <div>
+            <label for="email">Email :</label>
+            <input
+              tabindex="0"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Votre email"
+              required
+            />
+          </div>
+          <div>
+            <label for="message">Votre message :</label>
+            <textarea
+              tabindex="0"
+              name="message"
+              id="message"
+              placeholder="Votre message"
+              required
+            ></textarea>
+          </div>
+          <button tabindex="0" class="contact_button" type="submit">
+            Envoyer
+          </button>
+        </form>
       </div>
-     
-      <div class="list-img"></div>
-      <div aria-label="image closeup view" aria-hidden="false" class="lightbox">
-      
-        <i class="close-button btn fas fa-times" aria-label="Close dialog"></i>
-       
-          
-      <figure   class="lightbox-image"></figure>
-        
-        <div class="lightbox-navigation">
-          <button class="lightbox-prev-button btn" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
-          <button class="lightbox-next-button btn"  aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
-        </div>
-      </div>
-      <div id="banner"></div>
-    </section>
-  </main>
-  <div id="contact_modal">
-    <div class="modal">
-      <header id="header-contact">
-        <div>
-          <h1>Contactez-moi</h1>
-          <h1 id="photographer-name" aria-label="name photographe"></h1>
-        </div>
-        
-        <img src="assets/icons/close.svg" onclick="closeModal()" aria-label="Close dialog" >
-      </header>
-      
-      <form action="" method="get">
-        <div>
-          <label for="surname">Prénom :</label>
-          <input tabindex="0" type="text" name="surname" id="surname" placeholder="Votre nom" required>
-        </div>
-        <div>
-          <label for="name">Nom :</label>
-          <input tabindex="0" type="text" name="name" id="name" placeholder="Votre prénom" required>
-        </div>
-        <div>
-          <label for="email">Email :</label>
-          <input tabindex="0" type="email" name="email" id="email" placeholder="Votre email" required>
-        </div>
-        <div>
-          <label for="message">Votre message :</label>
-          <textarea tabindex="0" name="message" id="message" placeholder="Votre message" required></textarea>
-        </div>
-        <button tabindex="0" class="contact_button" type="submit">Envoyer</button>
-      </form>
-      
     </div>
-  </div> 
-  <script src="scripts/templates/media.js"></script>
-  <script src="scripts/pages/photographer.js"></script> 
-   <script src="scripts/utils/lightbox.js"></script>
-  <script src="scripts/utils/contactForm.js"></script>
-  
-</body>
+    <script src="scripts/templates/media.js"></script>
+    <script type="module" src="scripts/pages/photographer.js"></script>
+    <script src="scripts/utils/contactForm.js"></script>
+  </body>
 </html>

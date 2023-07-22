@@ -44,13 +44,12 @@ function mediaTemplate(mediaItem /* , photographers */) {
 
   const picture = `assets/shoot/${shooterName}/${image}`;
   const clip = `assets/shoot/${shooterName}/${video}`;
-  console.log(date, id);
   // Fonction pour obtenir la carte média
   const getMediaCardDOM = () => {
     const article = document.createElement("article");
     const profil = document.createElement("div");
     profil.className = "detaille";
-    const mediaContainer = document.createElement("a"); // Conteneur pour l'image ou la vidéo
+    const mediaContainer = document.createElement("div"); // Conteneur pour l'image ou la vidéo
 
     const titre = document.createElement("h2");
     const likeCount = document.createElement("span");
@@ -87,6 +86,7 @@ function mediaTemplate(mediaItem /* , photographers */) {
       mediaContainer.appendChild(img);
     }
     mediaContainer.setAttribute("data-lightbox", "gallery");
+    
     profil.appendChild(titre);
     profil.appendChild(likeCount);
     article.appendChild(mediaContainer);
@@ -98,29 +98,6 @@ function mediaTemplate(mediaItem /* , photographers */) {
 }
 
 
-function banner() {
-  const bannerHtml = document.querySelector("#banner");
-
-  const like = document.createElement("span");
-  const coeur = document.createElement("i");
-  const prix = document.createElement("span");
-  const contenueLike = document.createElement("p");
-
-  like.id = "total_likes";
-  coeur.className = "fas fa-heart";
-  coeur.setAttribute("aria-label", "likes");
-  like.setAttribute("aria-label", "Total likes");
-
-  prix.id = "price";
-
-  contenueLike.append(like, coeur);
-
-  bannerHtml.appendChild(contenueLike);
-  bannerHtml.appendChild(prix);
-
-  return bannerHtml;
-}
-banner();
 
 
 
