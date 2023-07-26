@@ -1,95 +1,110 @@
-// Fonction pour initialiser la lightbox avec les médias et les éléments DOM
-export function initLightbox(mediaCardDOMs, lightbox, lightboxImage, closeButton, prevButton, nextButton, media) {
+/* eslint-disable no-prototype-builtins */
+
+// eslint-disable-next-line no-unused-vars
+function addEventListeners(media) {
+  // Sélection des éléments DOM nécessaires
+  const mediaCardDOMs = document.querySelectorAll("[data-lightbox]");
+  const lightbox = document.querySelector(".lightbox");
+  const lightboxImage = document.querySelector(".lightbox-image");
+  const closeButton = document.querySelector(".close-button");
+  const prevButton = document.querySelector(".lightbox-prev-button");
+  const nextButton = document.querySelector(".lightbox-next-button");
+  const main = document.getElementById("main"); // Élément du main
+  const body = document.getElementById("body");
   let currentIndex = 0;
 
-  // Ajoute les écouteurs d'événements aux médias pour ouvrir la lightbox au clic ou en appuyant sur la touche "Enter"
+  // Ajout des écouteurs d'événements aux cartes média
   mediaCardDOMs.forEach((mediaCardDOM, index) => {
+    function openMediaLightbox(index) {
+      currentIndex = index;
+      displayMediaAtIndex(currentIndex);
+      lightbox.style.display = "block";
+      main.setAttribute("aria-hidden", "true");
+      lightbox.setAttribute("aria-hidden", "false");
+      body.classList.add("no-scroll");
+      prevButton.focus();
+    }
+
     mediaCardDOM.addEventListener("click", (e) => {
       e.preventDefault();
-      openLightbox(index, media, lightboxImage, lightbox);
+      openMediaLightbox(index);
     });
 
     mediaCardDOM.addEventListener("keydown", (e) => {
       if (e.code === "Enter") {
-        e.preventDefault();
-        openLightbox(index, media, lightboxImage, lightbox);
+        openMediaLightbox(index);
       }
     });
   });
 
-  // Fonction pour afficher le média suivant dans la lightbox
-  const nextLightbox = () => {
+  // Fonction pour passer au média suivant dans la lightbox
+  function nextLightbox() {
     currentIndex = (currentIndex + 1) % media.length;
-    displayMediaAtIndex(currentIndex, media, lightboxImage);
-    nextButton.classList.add('active');
-    prevButton.classList.remove('active'); // Supprimer la classe "active" du bouton précédent
-  
-  };
+    displayMediaAtIndex(currentIndex);
+    nextButton.classList.add("next");
+    prevButton.classList.remove("prev");
+  }
 
-  // Fonction pour afficher le média précédent dans la lightbox
-  const prevLightbox = () => {
+  // Fonction pour passer au média précédent dans la lightbox
+  function prevLightbox() {
     currentIndex = (currentIndex - 1 + media.length) % media.length;
-    displayMediaAtIndex(currentIndex, media, lightboxImage);
-    prevButton.classList.add('active');
-    nextButton.classList.remove('active'); // Supprimer la classe "active" du bouton suivant
-  
-  };
+    displayMediaAtIndex(currentIndex);
+    prevButton.classList.add("prev");
+    nextButton.classList.remove("next");
+  }
 
   // Fonction pour fermer la lightbox
-  const closeLightbox = () => {
+  function close() {
+    main.setAttribute("aria-hidden", "false");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("no-scroll");
     lightbox.style.display = "none";
     lightboxImage.innerHTML = "";
-  };
+  }
 
-  // Ajoute les écouteurs d'événements pour les boutons de navigation et le bouton de fermeture de la lightbox
+  // Ajout des écouteurs d'événements aux boutons de navigation et de fermeture
   nextButton.addEventListener("click", nextLightbox);
   prevButton.addEventListener("click", prevLightbox);
-  closeButton.addEventListener("click", closeLightbox);
+  closeButton.addEventListener("click", close);
 
-  // Ajoute un écouteur d'événement global pour gérer la navigation et la fermeture via les touches fléchées et la touche "Escape"
-  document.addEventListener("keydown", (e) => {
+  // Ajout de l'écouteur d'événement pour la navigation clavier
+  document.addEventListener("keydown", lightboxNavClavier);
+
+  // Fonction de navigation clavier pour la lightbox
+  function lightboxNavClavier(e) {
     if (lightbox.style.display === "block") {
       if (e.code === "ArrowRight") {
         nextLightbox();
       } else if (e.code === "ArrowLeft") {
         prevLightbox();
       } else if (e.code === "Escape") {
-        closeLightbox();
+        close();
       }
     }
-  });
-}
-
-// Fonction pour ouvrir la lightbox et afficher le média sélectionné
-function openLightbox(index, media, lightboxImage, lightbox) {
-  displayMediaAtIndex(index, media, lightboxImage);
-  lightbox.style.display = "block";
-
-  // Définir le focus sur la lightbox pour l'accessibilité
-  setTimeout(() => {
-    lightbox.focus();
-  }, 100); // Attendre 100 ms avant de définir le focus
-}
-
-// Fonction pour afficher le média à un index donné dans la lightbox
-function displayMediaAtIndex(index, media, lightboxImage) {
-  const mediaItem = media[index];
-  lightboxImage.innerHTML = "";
-  const titreLight = document.createElement("figcaption");
-
-  if (mediaItem.hasOwnProperty("image")) {
-    const imageLight = document.createElement("img");
-    imageLight.src = `assets/shoot/${mediaItem.shooterName}/${mediaItem.image}`;
-    imageLight.alt = mediaItem.title;
-    titreLight.textContent = mediaItem.title;
-    lightboxImage.appendChild(imageLight);
-  } else if (mediaItem.hasOwnProperty("video")) {
-    const videoLight = document.createElement("video");
-    videoLight.src = `assets/shoot/${mediaItem.shooterName}/${mediaItem.video}`;
-    videoLight.controls = true;
-    titreLight.textContent = mediaItem.title;
-    lightboxImage.appendChild(videoLight);
   }
 
-  lightboxImage.appendChild(titreLight);
+  // Fonction pour afficher le média à l'index spécifié dans la lightbox
+  function displayMediaAtIndex(index) {
+    const mediaItem = media[index];
+    lightboxImage.innerHTML = "";
+    const textLight = document.createElement("figcaption");
+    textLight.textContent = mediaItem.title;
+
+    if (mediaItem.hasOwnProperty("image")) {
+      // Affichage d'une image
+      const imageLight = document.createElement("img");
+      imageLight.src = `assets/shoot/${mediaItem.shooterName}/${mediaItem.image}`;
+      imageLight.alt = mediaItem.title;
+
+      lightboxImage.appendChild(imageLight);
+      lightboxImage.appendChild(textLight);
+    } else if (mediaItem.hasOwnProperty("video")) {
+      // Affichage d'une vidéo
+      const videoLight = document.createElement("video");
+      videoLight.src = `assets/shoot/${mediaItem.shooterName}/${mediaItem.video}`;
+      videoLight.controls = true;
+      lightboxImage.appendChild(videoLight);
+      lightboxImage.appendChild(textLight);
+    }
+  }
 }
